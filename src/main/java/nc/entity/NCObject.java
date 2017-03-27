@@ -1,5 +1,6 @@
 package nc.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import java.util.Map;
  *
  * @author Evgeniy Tupikov
  */
-public interface NCObject {
+public interface NCObject extends Serializable {
 
     //Object
     String getObjectId();

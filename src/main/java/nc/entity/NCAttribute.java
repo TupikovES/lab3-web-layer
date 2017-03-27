@@ -1,11 +1,13 @@
 package nc.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by petka on 27.03.2017.
  *
  * @author Evgeniy Tupikov
  */
-public interface NCAttribute {
+public interface NCAttribute extends Serializable {
 
     String getAttributeId();
     void setAttributeId(String attributeId);
