@@ -12,9 +12,9 @@ import java.util.List;
 public interface ClubService {
     Club getById(String id);
     Club getByName(String name);
-    int deleteClub(Club club);
-    int updateClub(Club club);
+    void deleteClub(Club club);
+    void updateClub(Club club);
     List<Club> getAll();
-    int createClub(Club club);
+    String createClub(Club club);
     boolean isExist(Club club);
 }

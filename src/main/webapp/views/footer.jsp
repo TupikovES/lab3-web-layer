@@ -11,9 +11,10 @@
     <footer class="container-fuild">
         net Cracker less 3 web-layer (C) 2016
     </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--%>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
 <spring:url value="/views/resources/js/bootstrap.js" var="bootstrapjs"/>
+
     <script src="${bootstrapjs}"></script>
 </body>
 </html>

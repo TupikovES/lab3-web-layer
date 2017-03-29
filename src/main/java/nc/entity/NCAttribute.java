@@ -19,7 +19,7 @@ public interface NCAttribute extends Serializable {
     void setType(String type);
     int getOrder();
     void setOrder(int order);
-    boolean getMultiple();
-    void setMultiple();
+    boolean isMultiple();
+    void setMultiple(boolean multiple);
 
 }

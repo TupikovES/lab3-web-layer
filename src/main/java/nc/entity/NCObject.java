@@ -22,8 +22,6 @@ public interface NCObject extends Serializable {
     void setObjectType(String objectType);
 
     //Object type
-    String getObjectTypeId();
-    void setObjectTypeId(String objectTypeId);
     String getObjectTypeName();
     void setObjectTypeName(String objectTypeName);
     String getObjectTypeParent();
@@ -31,7 +29,11 @@ public interface NCObject extends Serializable {
 
     //Attribute
     List<NCAttribute> getAttributes();
-    void setAttribute(List<NCAttribute> attributeList);
+    void setAttributes(List<NCAttribute> attributeList);
+
+    //Param
+    List<NCParam> getParams();
+    void setParams(List<NCParam> paramList);
 
     //Attribute and params
     Map<NCAttribute, NCParam> getValues();

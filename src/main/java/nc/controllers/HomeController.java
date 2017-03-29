@@ -1,5 +1,6 @@
 package nc.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
+    public static final Logger log = Logger.getLogger(HomeController.class);
+
     @RequestMapping("/")
-    public ModelAndView home() {
-        return new ModelAndView("home");
+    public String home(Model model) {
+        log.info("Переход в " + HomeController.class.getName());
+        model.addAttribute("title", "Welcome \"The Football Clubs\"");
+        return "home";
     }
 }

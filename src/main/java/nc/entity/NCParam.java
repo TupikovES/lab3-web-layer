@@ -16,11 +16,11 @@ public interface NCParam extends Serializable {
     void setAttributeId(String attributeId);
     String getStringValue();
     void setStringValue(String stringValue);
-    Date getDateValues();
-    void setDateValues(Date dateValues);
-    int getNumberValues();
-    void setNumberValues(int numberValues);
+    Date getDateValue();
+    void setDateValue(Date dateValues);
+    int getNumberValue();
+    void setNumberValue(int numberValues);
     NCObject getReferenceValue();
     void setReferenceValue(NCObject referenceValue);
-
+    void setValueByType(String type, Object value);
 }

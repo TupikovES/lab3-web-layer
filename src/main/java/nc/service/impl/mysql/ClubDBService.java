@@ -1,12 +1,18 @@
 package nc.service.impl.mysql;
 
-import nc.dao.ClubDao;
+import nc.dao.NCObjectDao;
 import nc.entity.Club;
+import nc.entity.NCAttribute;
+import nc.entity.NCObject;
+import nc.entity.NCParam;
+import nc.entity.impl.NCObjectImpl;
 import nc.service.ClubService;
+import nc.util.NCObjectConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,42 +24,42 @@ import java.util.List;
 public class ClubDBService implements ClubService {
 
     @Autowired
-    @Qualifier("clubDBDaoImpl")
-    private ClubDao clubDao;
-
+    @Qualifier("ncObjectDaoImpl")
+    private NCObjectDao objectDao;
 
     @Override
     public Club getById(String id) {
-        return clubDao.getById(id);
+        return null;
     }
 
     @Override
     public Club getByName(String name) {
-        return clubDao.getByName(name);
+        return null;
     }
 
     @Override
-    public int deleteClub(Club club) {
-        return clubDao.deleteClub(club);
+    public void deleteClub(Club club) {
+
     }
 
     @Override
-    public int updateClub(Club club) {
-        return clubDao.updateClub(club);
+    public void updateClub(Club club) {
+
     }
 
     @Override
     public List<Club> getAll() {
-        return clubDao.getAll();
+        return null;
     }
 
     @Override
-    public int createClub(Club club) {
-        return clubDao.createClub(club);
+    public String createClub(Club club) {
+        NCObject object = NCObjectConverter.toNCObject(club);
+        return objectDao.insertObject(object);
     }
 
     @Override
     public boolean isExist(Club club) {
-        return clubDao.isExist(club);
+        return false;
     }
 }
