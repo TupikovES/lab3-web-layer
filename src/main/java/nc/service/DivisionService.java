@@ -11,7 +11,7 @@ import java.util.List;
  * @author Evgeniy Tupikov
  */
 public interface DivisionService {
-    String createDivision(Division division);
+    String createDivision(Division division, String parentId);
     void updateDivision(Division division);
     void deleteDivision(String id);
     Division getById(String id);

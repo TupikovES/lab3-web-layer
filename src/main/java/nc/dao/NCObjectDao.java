@@ -5,6 +5,7 @@ import nc.entity.NCObject;
 import nc.entity.NCParam;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by petka on 24.03.2017.
@@ -20,6 +21,7 @@ public interface NCObjectDao {
 
     NCObject getObjectById(String id);
     NCObject getObjectByName(String name);
+    List<NCObject> getAllObjects();
     List<NCObject> getObjectsByParent(NCObject parent);
     List<NCObject> getObjectsByType(NCObject type);
     List<NCObject> getObjectsByAttributeValue(NCObject attribute);
@@ -39,4 +41,6 @@ public interface NCObjectDao {
     void updateParam(NCParam param);
     void updateAllParams(NCObject paramList);
     List<NCParam> getParamByObject(NCObject object);
+
+    Map<NCAttribute, NCParam> getValuesByObject(NCObject object);
 }

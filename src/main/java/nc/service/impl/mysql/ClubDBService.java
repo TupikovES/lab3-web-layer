@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by petka on 24.03.2017.
@@ -29,7 +30,7 @@ public class ClubDBService implements ClubService {
 
     @Override
     public Club getById(String id) {
-        return null;
+        return NCObjectConverter.toClub(objectDao.getObjectById(id));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class ClubDBService implements ClubService {
 
     @Override
     public void deleteClub(Club club) {
-
+        objectDao.deleteObject(club.getId());
     }
 
     @Override
@@ -49,7 +50,17 @@ public class ClubDBService implements ClubService {
 
     @Override
     public List<Club> getAll() {
-        return null;
+        NCObject type = new NCObjectImpl();
+        type.setObjectType(NCObjectConverter.CLUB_TYPE_ID);
+        List<NCObject> objectList = objectDao.getObjectsByType(type);
+        List<Club> clubList = new ArrayList<>();
+        for (NCObject object : objectList) {
+            Map<NCAttribute, NCParam> tempMap = objectDao.getValuesByObject(object);
+            object.setValues(tempMap);
+            Club club = NCObjectConverter.toClub(object);
+            clubList.add(club);
+        }
+        return clubList;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package nc.entity;
 
+import nc.util.batchsqlquery.BatchSqlCreator;
+import nc.util.batchsqlquery.BatchSqlCreatorContext;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -38,4 +41,7 @@ public interface NCObject extends Serializable {
     //Attribute and params
     Map<NCAttribute, NCParam> getValues();
     void setValues(Map<NCAttribute, NCParam> values);
+
+    BatchSqlCreator getContext();
+    void setContext(BatchSqlCreator context);
 }

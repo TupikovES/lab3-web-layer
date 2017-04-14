@@ -24,8 +24,15 @@
         <th>Delete</th>
     </tr>
     </thead>
-
     <tbody>
+    <c:forEach var="club" items="${clubs}">
+        <tr>
+            <th><a href="${rc}/division/views/${club.id}"><c:out value="${club.name}"/></a></th>
+            <th><c:out value="${club.city}"/></th>
+            <th><a href="${rc}/clubs/edit/${club.id}"><span class="glyphicon glyphicon-pencil"></span></a></th>
+            <th><a href="${rc}/clubs/del/${club.id}"><span class="glyphicon glyphicon-remove"></span></a></th>
+        </tr>
+    </c:forEach>
     </tbody>
 
 </table>

@@ -3,7 +3,9 @@ package nc.entity.impl;
 import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
+import nc.util.batchsqlquery.BatchSqlCreator;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +29,9 @@ public class NCObjectImpl implements NCObject {
     private List<NCAttribute> attributeList;
     private List<NCParam> paramList;
 
-    private Map<NCAttribute, NCParam> values;
+    private Map<NCAttribute, NCParam> values = new HashMap<>();
+
+    private BatchSqlCreator context;
 
     public NCObjectImpl() {}
 
@@ -162,5 +166,15 @@ public class NCObjectImpl implements NCObject {
     @Override
     public void setValues(Map<NCAttribute, NCParam> values) {
         this.values = values;
+    }
+
+    @Override
+    public BatchSqlCreator getContext() {
+        return context;
+    }
+
+    @Override
+    public void setContext(BatchSqlCreator context) {
+        this.context = context;
     }
 }

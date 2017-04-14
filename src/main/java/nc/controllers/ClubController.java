@@ -1,17 +1,19 @@
 package nc.controllers;
 
+import nc.entity.Club;
+import nc.entity.Division;
 import nc.entity.impl.ClubImpl;
 import nc.service.ClubService;
+import nc.service.DivisionService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by petka on 28.03.2017.
@@ -28,10 +30,17 @@ public class ClubController {
     @Qualifier("clubDBService")
     private ClubService clubService;
 
+    @Autowired
+    @Qualifier("divisionDBService")
+    private DivisionService divisionService;
+
     @RequestMapping(method = RequestMethod.GET)
     public String homeClub(Model model) {
         log.info("Go to " + ClubController.class.getName());
         model.addAttribute("title", "Clubs page");
+        List<Club> clubs = clubService.getAll();
+        log.info(clubs.toString());
+        model.addAttribute("clubs", clubs);
         return "club/club";
     }
 
@@ -43,6 +52,14 @@ public class ClubController {
         String id = clubService.createClub(club);
         log.info("added : " + id);
         return ResponseEntity.ok().body("success");
+    }
+
+    @RequestMapping(value = "/del/{id}",method = RequestMethod.GET)
+    public String homeClub(@PathVariable String id, Model model) {
+        Club club = new ClubImpl();
+        club.setId(id);
+        clubService.deleteClub(club);
+        return "redirect:club/club";
     }
 
 }

@@ -4,6 +4,9 @@ import nc.entity.*;
 import nc.entity.impl.ClubImpl;
 import nc.entity.impl.NCObjectImpl;
 import nc.entity.impl.NCParamImpl;
+import nc.util.batchsqlquery.BatchSqlCreatorContext;
+import nc.util.batchsqlquery.impl.ClubBatchSqlCreator;
+import nc.util.batchsqlquery.impl.DivisionBatchSqlCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +25,27 @@ public final class NCObjectConverter {
 
     public static NCObject toNCObject(Club club) {
         NCObject ncObject = new NCObjectImpl();
+        ncObject.setObjectId(club.getId() == null ? null : club.getId());
         ncObject.setObjectType(CLUB_TYPE_ID);
         ncObject.setObjectName(club.getName());
         List<NCParam> paramList = new ArrayList<>();
-        paramList.add(new NCParamImpl(club.getName()));
-        paramList.add(new NCParamImpl(club.getCity()));
+        paramList.add(new NCParamImpl("ad184d56-10b9-11e7-83f0-b888e3a0097b", club.getName()));
+        paramList.add(new NCParamImpl("ad18652a-10b9-11e7-83f0-b888e3a0097b", club.getCity()));
         ncObject.setParams(paramList);
+        ncObject.setContext(new ClubBatchSqlCreator());
         return ncObject;
     }
 
     public static NCObject toNCObject(Division division) {
-        return null;
+        NCObject ncObject = new NCObjectImpl();
+        ncObject.setObjectId(division.getId() == null ? null : division.getId());
+        ncObject.setObjectType(DIVISION_TYPE_ID);
+        ncObject.setObjectName(division.getName());
+        List<NCParam> paramList = new ArrayList<>();
+        paramList.add(new NCParamImpl("ad186ff1-10b9-11e7-83f0-b888e3a0097b", division.getName()));
+        ncObject.setParams(paramList);
+        ncObject.setContext(new ClubBatchSqlCreator());
+        return ncObject;
     }
 
     public static NCObject toNCObject(Player player) {
@@ -44,11 +57,12 @@ public final class NCObjectConverter {
 
         club.setId(ncObject.getObjectId());
         club.setName(ncObject.getObjectName());
-        String city;
-        for(Map.Entry<NCAttribute, NCParam> map : ncObject.getValues().entrySet()) {
-            NCAttribute attribute = map.getKey();
-            if(attribute.getAttributeName().equals("City")) {
-                club.setCity(map.getValue().getStringValue());
+        if (!ncObject.getValues().isEmpty()) {
+            for (Map.Entry<NCAttribute, NCParam> map : ncObject.getValues().entrySet()) {
+                NCAttribute attribute = map.getKey();
+                if (attribute.getAttributeName().equals("City")) {
+                    club.setCity(map.getValue().getStringValue());
+                }
             }
         }
         return club;

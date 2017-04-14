@@ -39,26 +39,22 @@ public class NCParamImpl implements NCParam {
         this.referenceValue = referenceValue;
     }
 
-    public NCParamImpl(String objectId, String attributeId, String stringValue) {
-        this.objectId = objectId;
+    public NCParamImpl(String attributeId, String stringValue) {
         this.attributeId = attributeId;
         this.stringValue = stringValue;
     }
 
-    public NCParamImpl(String objectId, String attributeId, Date dateValue) {
-        this.objectId = objectId;
+    public NCParamImpl(String attributeId, Date dateValue) {
         this.attributeId = attributeId;
         this.dateValue = dateValue;
     }
 
-    public NCParamImpl(String objectId, String attributeId, int numberValue) {
-        this.objectId = objectId;
+    public NCParamImpl(String attributeId, int numberValue) {
         this.attributeId = attributeId;
         this.numberValue = numberValue;
     }
 
-    public NCParamImpl(String objectId, String attributeId, NCObject referenceValue) {
-        this.objectId = objectId;
+    public NCParamImpl(String attributeId, NCObject referenceValue) {
         this.attributeId = attributeId;
         this.referenceValue = referenceValue;
     }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public interface Division extends Serializable {
     String getId();
-    void setId();
+    void setId(String id);
     String getName();
     void setName(String name);
 }
