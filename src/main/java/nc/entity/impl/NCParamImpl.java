@@ -126,20 +126,17 @@ public class NCParamImpl implements NCParam {
     @Override
     public void setValueByType(String type, Object value) {
         switch (type) {
-            case "String":
+            case "string":
                 setStringValue((String) value);
                 break;
-            case "Date":
+            case "date":
                 setDateValue((Date) value);
                 break;
-            case "Number":
+            case "number":
                 setNumberValue((int) value);
                 break;
-            case "Reference":
+            case "reference":
                 setReferenceValue((NCObject) value);
-                break;
-            default:
-                setStringValue((String) value);
                 break;
         }
     }

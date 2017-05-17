@@ -4,10 +4,12 @@ import nc.dao.NCObjectDao;
 import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
+import nc.entity.SearchResultObject;
 import nc.entity.impl.NCAttributeImpl;
 import nc.entity.impl.NCObjectImpl;
 import nc.entity.impl.NCParamImpl;
 import nc.util.rowmappers.ObjectRowMapper;
+import nc.util.rowmappers.SearchResultsRowMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.*;
@@ -43,7 +45,8 @@ public class NCObjectDaoImpl implements NCObjectDao{
     public static final String SELECT_OBJECT_BY_PARENT = "SELECT * FROM nc_object WHERE parent_id = ?";
     public static final String SELECT_OBJECT_BY_TYPE = "SELECT * FROM nc_object WHERE object_type = ?";
     public static final String SELECT_OBJECT_BY_ID = "SELECT * FROM nc_object WHERE object_id = ?";
-    public static final String SELECT_VELUES = "SELECT * FROM nc_attribute inner join nc_params using(attribute_id) where nc_params.object_id = ? order by nc_attribute.order_id;";
+    public static final String SELECT_VALUES = "SELECT * FROM nc_attribute inner join nc_params using(attribute_id) where nc_params.object_id = ? order by nc_attribute.order_id;";
+    public static final String SEARCH_BY_PARAM = "select t1.object_id, t1.object_name, t2.object_type_name, t4.type, t4.attribute_name, t3.string_value, t3.number_value from nc_object t1 inner join nc_object_type t2 on t1.object_type = t2.object_type_id inner join nc_params t3 using(object_id) inner join nc_attribute t4 on t3.attribute_id = t4.attribute_id where locate(?, t3.string_value) or locate(?, t3.number_value);";
 
     @Override
     public String insertObject(NCObject object) {
@@ -144,6 +147,19 @@ public class NCObjectDaoImpl implements NCObjectDao{
     }
 
     @Override
+    public List<SearchResultObject> searchObjectByParam(String query) {
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement(SEARCH_BY_PARAM);
+            ps.setString(1, query);
+            ps.setString(2, query);
+            return ps;
+        };
+
+        List<SearchResultObject> searchResults = jdbcTemplate.query(psc, new SearchResultsRowMapper());
+        return searchResults;
+    }
+
+    @Override
     public List<NCObject> getObjectTypeByParent(NCObject parent) {
         return null;
     }
@@ -189,7 +205,7 @@ public class NCObjectDaoImpl implements NCObjectDao{
             values.clear();
         }
         PreparedStatementCreator psc = connection -> {
-            PreparedStatement ps = connection.prepareStatement(SELECT_VELUES);
+            PreparedStatement ps = connection.prepareStatement(SELECT_VALUES);
             ps.setString(1, object.getObjectId());
             return ps;
         };

@@ -35,7 +35,7 @@ public class ClubDBService implements ClubService {
 
     @Override
     public Club getByName(String name) {
-        return null;
+        return NCObjectConverter.toClub(objectDao.getObjectByName(name));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class ClubDBService implements ClubService {
 
     @Override
     public void updateClub(Club club) {
-
+        objectDao.updateObject(NCObjectConverter.toNCObject(club));
     }
 
     @Override

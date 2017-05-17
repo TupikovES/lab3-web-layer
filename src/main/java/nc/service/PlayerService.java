@@ -12,7 +12,7 @@ import java.util.List;
  * @author Evgeniy Tupikov
  */
 public interface PlayerService {
-    String createPlayer(Player player);
+    String createPlayer(Player player, String parentId);
     void updatePlayer(Player player);
     void deletePlayer(String id);
     Division getById(String id);

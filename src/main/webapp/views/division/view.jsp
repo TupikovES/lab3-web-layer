@@ -13,7 +13,7 @@
 <script src="${modal_js}" type="text/javascript" ></script>
 <h2>Divisions from ${club.name}</h2>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#divisionModal">
-    Add club...
+    Add division...
 </button>
 <table class="table">
     <caption>Division list</caption>
@@ -27,7 +27,7 @@
     <tbody>
     <c:forEach var="division" items="${divisions}">
         <tr>
-            <th><a href="${rc}/player/view/${division.id}"><c:out value="${division.name}"/></a></th>
+            <th><a href="${rc}/player/views/${division.id}"><c:out value="${division.name}"/></a></th>
             <th><a href="${rc}/division/edit/${division.id}"><span class="glyphicon glyphicon-pencil"></span></a></th>
             <th><a href="${rc}/division/del/${division.id}"><span class="glyphicon glyphicon-remove"></span></a></th>
         </tr>

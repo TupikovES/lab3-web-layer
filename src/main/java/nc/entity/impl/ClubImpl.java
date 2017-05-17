@@ -68,7 +68,7 @@ public class ClubImpl implements Club {
     @Override
     public String toString() {
         return "ClubImpl{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", city='" + city + '\'' +
                 "}";

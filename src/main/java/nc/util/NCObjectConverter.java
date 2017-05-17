@@ -1,12 +1,11 @@
 package nc.util;
 
 import nc.entity.*;
-import nc.entity.impl.ClubImpl;
-import nc.entity.impl.NCObjectImpl;
-import nc.entity.impl.NCParamImpl;
+import nc.entity.impl.*;
 import nc.util.batchsqlquery.BatchSqlCreatorContext;
 import nc.util.batchsqlquery.impl.ClubBatchSqlCreator;
 import nc.util.batchsqlquery.impl.DivisionBatchSqlCreator;
+import nc.util.batchsqlquery.impl.PlayerBatchSqlCreator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,17 @@ public final class NCObjectConverter {
     }
 
     public static NCObject toNCObject(Player player) {
-        return null;
+        NCObject ncObject = new NCObjectImpl();
+        ncObject.setObjectId(player.getId() == null ? null : player.getId());
+        ncObject.setObjectType(PLAYER_TYPE_ID);
+        ncObject.setObjectName(player.getLastName());
+        List<NCParam> paramList = new ArrayList<>();
+        paramList.add(new NCParamImpl("ad2b074c-10b9-11e7-83f0-b888e3a0097b", player.getFirstName()));
+        paramList.add(new NCParamImpl("ad2b22cd-10b9-11e7-83f0-b888e3a0097b", player.getLastName()));
+        paramList.add(new NCParamImpl("ad2b3a78-10b9-11e7-83f0-b888e3a0097b", player.getAge()));
+        ncObject.setParams(paramList);
+        ncObject.setContext(new PlayerBatchSqlCreator());
+        return ncObject;
     }
 
     public static Club toClub(NCObject ncObject){
@@ -66,5 +75,36 @@ public final class NCObjectConverter {
             }
         }
         return club;
+    }
+
+    public static Division toDivision(NCObject ncObject) {
+        Division division = new DivisionImpl();
+        division.setId(ncObject.getObjectId());
+        division.setName(ncObject.getObjectName());
+        return division;
+    }
+
+    public static Player toPlayer(NCObject ncObject) {
+        Player player = new PlayerImpl();
+        player.setId(ncObject.getObjectId());
+        if (!ncObject.getValues().isEmpty()) {
+            for (Map.Entry<NCAttribute, NCParam> map :
+                 ncObject.getValues().entrySet()) {
+                switch (map.getKey().getAttributeName()) {
+                    case "First Name":
+                        player.setFirstName(map.getValue().getStringValue());
+                        break;
+                    case "Last Name":
+                        player.setLastName(map.getValue().getStringValue());
+                        break;
+                    case "Age":
+                        player.setAge(map.getValue().getNumberValue());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        return player;
     }
 }

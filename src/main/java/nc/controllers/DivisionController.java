@@ -38,7 +38,7 @@ public class DivisionController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity addClub(@RequestBody DivisionImpl division) {
+    public ResponseEntity addDivision(@RequestBody DivisionImpl division) {
         //add validator...
         log.info("Run add method... club = " + division.toString());
         String id = divisionService.createDivision(division, CLUB_ID);

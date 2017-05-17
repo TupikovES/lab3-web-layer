@@ -3,6 +3,7 @@ package nc.dao;
 import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
+import nc.entity.SearchResultObject;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public interface NCObjectDao {
 
     NCObject getObjectById(String id);
     NCObject getObjectByName(String name);
+    List<SearchResultObject> searchObjectByParam(String query);
     List<NCObject> getAllObjects();
     List<NCObject> getObjectsByParent(NCObject parent);
     List<NCObject> getObjectsByType(NCObject type);

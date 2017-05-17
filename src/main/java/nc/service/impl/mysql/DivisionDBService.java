@@ -38,22 +38,22 @@ public class DivisionDBService implements DivisionService {
 
     @Override
     public void updateDivision(Division division) {
-
+        objectDao.updateObject(NCObjectConverter.toNCObject(division));
     }
 
     @Override
     public void deleteDivision(String id) {
-
+        objectDao.deleteObject(id);
     }
 
     @Override
     public Division getById(String id) {
-        return null;
+        return NCObjectConverter.toDivision(objectDao.getObjectById(id));
     }
 
     @Override
     public Division getByName(String name) {
-        return null;
+        return NCObjectConverter.toDivision(objectDao.getObjectByName(name));
     }
 
     @Override
@@ -62,8 +62,7 @@ public class DivisionDBService implements DivisionService {
         log.info("Division DB Service : " + objectList.isEmpty());
         List<Division> divisionList = new ArrayList<>();
         for (NCObject object : objectList) {
-            Division division = new DivisionImpl(object.getObjectId(), object.getObjectName());
-            divisionList.add(division);
+            divisionList.add(NCObjectConverter.toDivision(object));
         }
         return divisionList;
     }

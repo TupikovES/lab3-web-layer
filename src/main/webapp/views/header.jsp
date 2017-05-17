@@ -44,6 +44,12 @@
                         <li><a href="${rc}/clubs">Catalog</a></li>
                     </ul>
                 </div>
+                <form method="get" action="${rc}/search" class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <input type="search" name="query" class="form-control" id="query" placeholder="Search">
+                    </div>
+                    <button type="submit" id="search" class="btn btn-default">Submit</button>
+                </form>
             </div>
         </nav>
     </header>

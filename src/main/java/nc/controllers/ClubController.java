@@ -55,11 +55,16 @@ public class ClubController {
     }
 
     @RequestMapping(value = "/del/{id}",method = RequestMethod.GET)
-    public String homeClub(@PathVariable String id, Model model) {
+    public String deleteClub(@PathVariable String id, Model model) {
         Club club = new ClubImpl();
         club.setId(id);
         clubService.deleteClub(club);
         return "redirect:club/club";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editClub(@PathVariable String id, Model model) {
+        return "club/edit";
     }
 
 }
