@@ -38,26 +38,28 @@ public class PlayerDBService implements PlayerService {
 
     @Override
     public void updatePlayer(Player player) {
-
+        objectDao.updateObject(NCObjectConverter.toNCObject(player));
     }
 
     @Override
     public void deletePlayer(String id) {
-
+        objectDao.deleteObject(id);
     }
 
     @Override
-    public Division getById(String id) {
+    public Player getById(String id) {
+        NCObject object = objectDao.getObjectById(id);
+        object.setValues(objectDao.getValuesByObject(object));
+        return NCObjectConverter.toPlayer(object);
+    }
+
+    @Override
+    public Player getByFirstName(String firstName) {
         return null;
     }
 
     @Override
-    public Division getByFirstName(String firstName) {
-        return null;
-    }
-
-    @Override
-    public Division getByLastName(String lastName) {
+    public Player getByLastName(String lastName) {
         return null;
     }
 

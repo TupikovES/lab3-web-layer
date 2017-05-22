@@ -30,7 +30,9 @@ public class ClubDBService implements ClubService {
 
     @Override
     public Club getById(String id) {
-        return NCObjectConverter.toClub(objectDao.getObjectById(id));
+        NCObject object = objectDao.getObjectById(id);
+        object.setValues(objectDao.getValuesByObject(object));
+        return NCObjectConverter.toClub(object);
     }
 
     @Override

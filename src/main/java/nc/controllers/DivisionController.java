@@ -47,12 +47,11 @@ public class DivisionController {
     }
 
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity deleteDivision(@PathVariable String id, Model model) {
+    public String deleteDivision(@PathVariable String id, Model model) {
         log.info("delete...");
         divisionService.deleteDivision(id);
         log.info("success delete!");
-        return ResponseEntity.ok().body("success");
+        return "redirect:/views/" + CLUB_ID;
     }
 
     @RequestMapping(value = "/views/{id}", method = RequestMethod.GET)
@@ -67,6 +66,19 @@ public class DivisionController {
         log.info(divisions.toString());
         model.addAttribute("divisions", divisions);
         return "division/view";
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editDivision(@PathVariable String id, Model model) {
+        Division division = divisionService.getById(id);
+        model.addAttribute("division", division);
+        return "division/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateDivision(@RequestParam String id, @RequestParam String name) {
+        divisionService.updateDivision(new DivisionImpl(id, name));
+        return "redirect:/division/views/" + CLUB_ID;
     }
 
 }

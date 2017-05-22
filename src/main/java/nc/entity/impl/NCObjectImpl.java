@@ -177,4 +177,18 @@ public class NCObjectImpl implements NCObject {
     public void setContext(BatchSqlCreator context) {
         this.context = context;
     }
+
+    @Override
+    public String toString() {
+        return "NCObject { " +
+                "object_id = " + objectId + ", " +
+                "object_name = " + objectName + ", " +
+                "object_parent = " + objectParent + ", " +
+                "object_type = " + objectType + ", " +
+                "object_type_name = " + objectTypeName + ", " +
+                "object_type_parent = " + objectTypeParent + ", " +
+                "attribute_list = " + (attributeList != null ? attributeList.toString() : "null") + ", " +
+                "param_list = " + (paramList != null ? paramList.toString() : "null") +
+                " }";
+    }
 }

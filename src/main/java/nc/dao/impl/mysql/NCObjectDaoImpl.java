@@ -47,19 +47,18 @@ public class NCObjectDaoImpl implements NCObjectDao{
     public static final String SELECT_OBJECT_BY_ID = "SELECT * FROM nc_object WHERE object_id = ?";
     public static final String SELECT_VALUES = "SELECT * FROM nc_attribute inner join nc_params using(attribute_id) where nc_params.object_id = ? order by nc_attribute.order_id;";
     public static final String SEARCH_BY_PARAM = "select t1.object_id, t1.object_name, t2.object_type_name, t4.type, t4.attribute_name, t3.string_value, t3.number_value from nc_object t1 inner join nc_object_type t2 on t1.object_type = t2.object_type_id inner join nc_params t3 using(object_id) inner join nc_attribute t4 on t3.attribute_id = t4.attribute_id where locate(?, t3.string_value) or locate(?, t3.number_value);";
+    public static final String UPDATE_OBJECT = "UPDATE nc_object SET object_name = ? WHERE object_id = ?";
+    public static final String UPDATE_PARAM_STRING = "UPDATE nc_params SET string_value = ? WHERE object_id = ? AND attribute_id = ?";
+    public static final String UPDATE_PARAM_NUMBER = "UPDATE nc_params SET number_value = ? WHERE object_id = ? AND attribute_id = ?";
 
     @Override
     public String insertObject(NCObject object) {
-        PreparedStatementCreator psc = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-                PreparedStatement ps = connection.prepareStatement(INSERT_OBJECT, Statement.RETURN_GENERATED_KEYS);
-                ps.setString(1, object.getObjectName());
-                ps.setString(2, object.getObjectParent());
-                ps.setString(3, object.getObjectType());
-                log.info(ps.toString());
-                return ps;
-            }
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement(INSERT_OBJECT, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, object.getObjectName());
+            ps.setString(2, object.getObjectParent());
+            ps.setString(3, object.getObjectType());
+            return ps;
         };
         jdbcTemplate.update(psc);
         id = getLastId();
@@ -71,7 +70,15 @@ public class NCObjectDaoImpl implements NCObjectDao{
 
     @Override
     public void updateObject(NCObject object) {
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement(UPDATE_OBJECT);
+            ps.setString(1, object.getObjectName());
+            ps.setString(2, object.getObjectId());
+            return ps;
+        };
 
+        jdbcTemplate.update(psc);
+        updateAllParams(object);
     }
 
     @Override
@@ -186,12 +193,36 @@ public class NCObjectDaoImpl implements NCObjectDao{
 
     @Override
     public void updateParam(NCParam param) {
+        log.info("Update param : " + param.toString());
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps;
+            if (param.getStringValue() != null) {
+                ps = connection.prepareStatement(UPDATE_PARAM_STRING);
+                ps.setString(1, param.getStringValue());
+                ps.setString(2, param.getObjectId());
+                ps.setString(3, param.getAttributeId());
+                return ps;
+            } else if (param.getNumberValue() != 0) {
+                ps = connection.prepareStatement(UPDATE_PARAM_NUMBER);
+                ps.setInt(1, param.getNumberValue());
+                ps.setString(2, param.getObjectId());
+                ps.setString(3, param.getAttributeId());
 
+                return ps;
+            }
+            return null;
+        };
+
+        jdbcTemplate.update(psc);
     }
 
     @Override
     public void updateAllParams(NCObject paramList) {
-
+        log.info("Update params... " + paramList.toString());
+        for (NCParam param : paramList.getParams()) {
+            param.setObjectId(paramList.getObjectId());
+        }
+        paramList.getParams().forEach(this::updateParam);
     }
 
     @Override

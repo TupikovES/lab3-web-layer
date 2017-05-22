@@ -48,7 +48,9 @@ public class DivisionDBService implements DivisionService {
 
     @Override
     public Division getById(String id) {
-        return NCObjectConverter.toDivision(objectDao.getObjectById(id));
+        NCObject object = objectDao.getObjectById(id);
+        object.setValues(objectDao.getValuesByObject(object));
+        return NCObjectConverter.toDivision(object);
     }
 
     @Override

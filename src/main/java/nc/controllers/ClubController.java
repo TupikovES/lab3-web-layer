@@ -64,7 +64,16 @@ public class ClubController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String editClub(@PathVariable String id, Model model) {
+        Club club = clubService.getById(id);
+        model.addAttribute("club", club);
         return "club/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateClub(@RequestParam String id, @RequestParam String name, @RequestParam String city) {
+        log.info(id + " - " + name + " - " + city);
+        clubService.updateClub(new ClubImpl(id, name, city));
+        return "redirect:/clubs";
     }
 
 }

@@ -140,4 +140,14 @@ public class NCParamImpl implements NCParam {
                 break;
         }
     }
+
+    @Override
+    public String toString() {
+        return "NCParam { " +
+                "object_id = " + objectId + ", " +
+                "attribute_id = " + attributeId + ", " +
+                "string_value = " + stringValue + ", " +
+                "number_value = " + numberValue +
+                " }";
+    }
 }

@@ -57,7 +57,26 @@ public class PlayerController {
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
     public String deletePlayer(@PathVariable String id) {
         playerService.deletePlayer(id);
-        return "redirect:player/view/" + LAST_DIVISION;
+        return "redirect:/player/view/" + LAST_DIVISION;
+    }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
+    public String editDivision(@PathVariable String id, Model model) {
+        Player player = playerService.getById(id);
+        log.info("get player for id : " + id + "\n" +
+        "player : " + player.toString());
+        model.addAttribute("player", player);
+        return "player/edit";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public String updateDivision(
+            @RequestParam String id,
+            @RequestParam String firstName,
+            @RequestParam String lastName,
+            @RequestParam String age) {
+        playerService.updatePlayer(new PlayerImpl(id, firstName, lastName, Integer.parseInt(age)));
+        return "redirect:/player/views/" + LAST_DIVISION;
     }
 
 }

@@ -15,9 +15,9 @@ public interface PlayerService {
     String createPlayer(Player player, String parentId);
     void updatePlayer(Player player);
     void deletePlayer(String id);
-    Division getById(String id);
-    Division getByFirstName(String firstName);
-    Division getByLastName(String lastName);
+    Player getById(String id);
+    Player getByFirstName(String firstName);
+    Player getByLastName(String lastName);
     List<Player> getByClub(Club club);
     List<Player> getByDivision(Division division);
     List<Player> getByAge(int age);
