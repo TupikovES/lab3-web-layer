@@ -2,9 +2,7 @@ package nc.entity.impl;
 
 import nc.entity.Division;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.*;
 
 /**
  * Created by petka on 13.04.2017.

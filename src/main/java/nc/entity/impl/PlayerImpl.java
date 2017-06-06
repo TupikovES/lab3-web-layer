@@ -2,11 +2,17 @@ package nc.entity.impl;
 
 import nc.entity.Player;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by petka on 09.05.2017.
  *
  * @author Evgeniy Tupikov
  */
+@XmlRootElement(name = "player")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PlayerImpl implements Player {
 
     private static final long serialVersionUID = 3647018393161142340L;

@@ -3,6 +3,10 @@ package nc.entity.impl;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
@@ -10,6 +14,8 @@ import java.util.Date;
  *
  * @author Evgeniy Tupikov
  */
+@XmlRootElement(name = "param")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NCParamImpl implements NCParam {
 
     private static final long serialVersionUID = 5686136934572489040L;
@@ -19,6 +25,8 @@ public class NCParamImpl implements NCParam {
     private String stringValue;
     private Date dateValue;
     private int numberValue;
+
+    @XmlElement(type = NCAttributeImpl.class, name = "object")
     private NCObject referenceValue;
 
     public NCParamImpl() {}

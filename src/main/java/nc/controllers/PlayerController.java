@@ -57,7 +57,7 @@ public class PlayerController {
     @RequestMapping(value = "/del/{id}", method = RequestMethod.GET)
     public String deletePlayer(@PathVariable String id) {
         playerService.deletePlayer(id);
-        return "redirect:/player/view/" + LAST_DIVISION;
+        return "redirect:/player/views/" + LAST_DIVISION;
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)

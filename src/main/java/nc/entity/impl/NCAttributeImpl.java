@@ -2,11 +2,17 @@ package nc.entity.impl;
 
 import nc.entity.NCAttribute;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by petka on 27.03.2017.
  *
  * @author Evgeniy Tupikov
  */
+@XmlRootElement(name = "attribute")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NCAttributeImpl implements NCAttribute {
 
     private static final long serialVersionUID = -1609690264860696629L;

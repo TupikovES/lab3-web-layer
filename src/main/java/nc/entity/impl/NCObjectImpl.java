@@ -5,6 +5,7 @@ import nc.entity.NCObject;
 import nc.entity.NCParam;
 import nc.util.batchsqlquery.BatchSqlCreator;
 
+import javax.xml.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,8 @@ import java.util.Map;
  *
  * @author Evgeniy Tupikov
  */
+@XmlRootElement(name = "object")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class NCObjectImpl implements NCObject {
 
     private static final long serialVersionUID = -4877459895255861985L;
@@ -26,11 +29,16 @@ public class NCObjectImpl implements NCObject {
     private String objectTypeName;
     private String objectTypeParent;
 
+    @XmlElement(type = NCAttributeImpl.class, name = "attributes")
     private List<NCAttribute> attributeList;
+
+    @XmlElement(type = NCParamImpl.class, name = "params")
     private List<NCParam> paramList;
 
+    @XmlTransient
     private Map<NCAttribute, NCParam> values = new HashMap<>();
 
+    @XmlTransient
     private BatchSqlCreator context;
 
     public NCObjectImpl() {}

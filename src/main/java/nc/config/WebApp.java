@@ -4,18 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.xslt.XsltView;
+import org.springframework.web.servlet.view.xslt.XsltViewResolver;
 
-import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by petka on 24.03.2017.
@@ -37,21 +33,27 @@ public class WebApp extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-//    @Bean
-//    public HttpMessageConverter<String> messageConverter() {
-//        StringHttpMessageConverter converter = new StringHttpMessageConverter();
-//        converter.setSupportedMediaTypes(Arrays.asList(new MediaType("text", "html", Charset.forName("UTF-8"))));
-//        return converter;
-//    }
+    @Bean
+    public XsltViewResolver xsltViewResolver() {
+        XsltViewResolver xsltViewResolver = new XsltViewResolver();
+        xsltViewResolver.setViewClass(XsltView.class);
+        xsltViewResolver.setViewNames(new String[] {"viewobject"});
+        xsltViewResolver.setPrefix("/WEB-INF/xsl/");
+        xsltViewResolver.setSuffix(".xsl");
+        return xsltViewResolver;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/views/**").addResourceLocations("/views/");
     }
 
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        super.configureMessageConverters(converters);
-//        converters.add(messageConverter());
+//    @Bean(name = "multipartResolver")
+//    public CommonsMultipartResolver createMultipartResolver() {
+//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//        resolver.setDefaultEncoding("utf-8");
+//        resolver.setMaxUploadSize(5242880);//5MB
+//        return resolver;
 //    }
+
 }

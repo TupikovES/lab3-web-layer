@@ -1,10 +1,12 @@
 package nc.util.batchsqlquery.impl;
 
-import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
 import nc.util.batchsqlquery.BatchSqlCreator;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -12,6 +14,8 @@ import java.util.List;
  *
  * @author Evgeniy Tupikov
  */
+@XmlRootElement(name = "player-batch")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class PlayerBatchSqlCreator implements BatchSqlCreator {
     @Override
     public String[] create(NCObject object) {

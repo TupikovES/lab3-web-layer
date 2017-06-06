@@ -9,13 +9,18 @@
 <%@include file="header.jsp"%>
 
 <h1>Welcome, Lab 3 web-layer</h1>
-<h2>Спортивное сообщество</h2>
+<h2>Sports community</h2>
 
-<p>3 типа:</p>
+<p>3 types:</p>
 <ol>
-    <li><a href="${rc}/clubs">Клубы</a></li>
-    <li>Дивизионы</li>
-    <li>Игроки</li>
+    <li><a href="${rc}/clubs">Clubs</a></li>
+    <li>Divisions</li>
+    <li>Players</li>
 </ol>
+
+<p class="text-info">
+    <p>Added export and import support</p>
+    <p>Click to import : <a class="" href="${rc}/import"><button class="btn btn-default">Import...</button></a></p>
+</div>
 
 <%@include file="footer.jsp"%>

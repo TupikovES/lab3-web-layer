@@ -1,7 +1,6 @@
 package nc.controllers;
 
 import nc.entity.Club;
-import nc.entity.Division;
 import nc.entity.impl.ClubImpl;
 import nc.service.ClubService;
 import nc.service.DivisionService;
@@ -59,7 +58,7 @@ public class ClubController {
         Club club = new ClubImpl();
         club.setId(id);
         clubService.deleteClub(club);
-        return "redirect:club/club";
+        return "redirect:/clubs";
     }
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
