@@ -13,4 +13,5 @@ import java.io.File;
 public interface XMLStatelessBean {
     Document getDocumentObject(NCObject object);
     File getFileObject(NCObject object);
+    NCObject importFile(File file);
 }

@@ -4,8 +4,10 @@ import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
 import nc.util.batchsqlquery.BatchSqlCreator;
+import org.springframework.stereotype.Component;
 
 import javax.xml.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,14 +31,20 @@ public class NCObjectImpl implements NCObject {
     private String objectTypeName;
     private String objectTypeParent;
 
-    @XmlElement(type = NCAttributeImpl.class, name = "attributes")
+    @XmlElementWrapper(name = "attributes")
+    @XmlElement(type = NCAttributeImpl.class, name = "attribute")
     private List<NCAttribute> attributeList;
 
-    @XmlElement(type = NCParamImpl.class, name = "params")
+    @XmlElementWrapper(name = "params")
+    @XmlElement(name = "param",type = NCParamImpl.class)
     private List<NCParam> paramList;
 
     @XmlTransient
     private Map<NCAttribute, NCParam> values = new HashMap<>();
+
+    @XmlElementWrapper(name = "childs")
+    @XmlElement(name = "child", type = NCObjectImpl.class)
+    private List<NCObject> childList = new ArrayList<>();
 
     @XmlTransient
     private BatchSqlCreator context;
@@ -124,6 +132,16 @@ public class NCObjectImpl implements NCObject {
     @Override
     public void setObjectType(String objectType) {
         this.objectType = objectType;
+    }
+
+    @Override
+    public List<NCObject> getChildList() {
+        return childList;
+    }
+
+    @Override
+    public void setChildList(List<NCObject> childList) {
+        this.childList = childList;
     }
 
     @Override

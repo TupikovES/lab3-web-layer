@@ -13,8 +13,10 @@ import nc.util.rowmappers.SearchResultsRowMapper;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.RowSet;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,6 +50,7 @@ public class NCObjectDaoImpl implements NCObjectDao{
     public static final String SELECT_VALUES = "SELECT * FROM nc_attribute inner join nc_params using(attribute_id) where nc_params.object_id = ? order by nc_attribute.order_id;";
     public static final String SEARCH_BY_PARAM = "select t1.object_id, t1.object_name, t2.object_type_name, t4.type, t4.attribute_name, t3.string_value, t3.number_value from nc_object t1 inner join nc_object_type t2 on t1.object_type = t2.object_type_id inner join nc_params t3 using(object_id) inner join nc_attribute t4 on t3.attribute_id = t4.attribute_id where locate(?, t3.string_value) or locate(?, t3.number_value);";
     public static final String UPDATE_OBJECT = "UPDATE nc_object SET object_name = ? WHERE object_id = ?";
+    public static final String UPDATE_OBJECT_ID = "UPDATE nc_object SET object_id = ? WHERE object_id = ?";
     public static final String UPDATE_PARAM_STRING = "UPDATE nc_params SET string_value = ? WHERE object_id = ? AND attribute_id = ?";
     public static final String UPDATE_PARAM_NUMBER = "UPDATE nc_params SET number_value = ? WHERE object_id = ? AND attribute_id = ?";
 
@@ -63,7 +66,13 @@ public class NCObjectDaoImpl implements NCObjectDao{
         jdbcTemplate.update(psc);
         id = getLastId();
         log.info("id = " + id);
-        object.setObjectId(id);
+        if (object.getObjectId() != null) {
+            log.info("set id");
+            updateObjectId(id, object.getObjectId());
+        } else {
+            log.info("new id");
+            object.setObjectId(id);
+        }
         insertAllParams(object);
         return id;
     }
@@ -79,6 +88,17 @@ public class NCObjectDaoImpl implements NCObjectDao{
 
         jdbcTemplate.update(psc);
         updateAllParams(object);
+    }
+
+    @Override
+    public void updateObjectId(String lastId, String newId) {
+        PreparedStatementCreator psc = connection -> {
+            PreparedStatement ps = connection.prepareStatement(UPDATE_OBJECT_ID);
+            ps.setString(1, newId);
+            ps.setString(2, lastId);
+            return ps;
+        };
+        jdbcTemplate.update(psc);
     }
 
     @Override
@@ -262,6 +282,20 @@ public class NCObjectDaoImpl implements NCObjectDao{
         }
         jdbcTemplate.query(psc, new ValuesRowMapper());
         return values;
+    }
+
+    @Override
+    public boolean isExist(NCObject object) {
+//        PreparedStatementCreator psc = connection -> {
+//            PreparedStatement ps = connection.prepareStatement(SELECT_OBJECT_BY_ID);
+//            ps.setString(1, object.getObjectId());
+//            return ps;
+//        };
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(SELECT_OBJECT_BY_ID, new Object[]{object.getObjectId()});
+        if (rs.next()) {
+            return false;
+        }
+        return true;
     }
 
     private String getLastId() {

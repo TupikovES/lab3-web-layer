@@ -24,6 +24,9 @@ public interface NCObject extends Serializable {
     String getObjectType();
     void setObjectType(String objectType);
 
+    List<NCObject> getChildList();
+    void setChildList(List<NCObject> parentList);
+
     //Object type
     String getObjectTypeName();
     void setObjectTypeName(String objectTypeName);

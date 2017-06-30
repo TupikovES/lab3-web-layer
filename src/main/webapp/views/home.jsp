@@ -20,7 +20,7 @@
 
 <p class="text-info">
     <p>Added export and import support</p>
-    <p>Click to import : <a class="" href="${rc}/import"><button class="btn btn-default">Import...</button></a></p>
+    <p>Click to import : <a class="" href="${rc}/xml/import"><button class="btn btn-default">Import...</button></a></p>
 </div>
 
 <%@include file="footer.jsp"%>

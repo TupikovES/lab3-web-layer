@@ -8,10 +8,23 @@
             </head>
             <body>
                 <h1>XSLT View</h1>
-                <p><a href="/Lab3">Home</a><span><a href="/Lab3/xml/export">export</a></span></p>
+                <p><a href="/Lab3">to Home</a></p>
                 <xsl:for-each select="object">
-                    <xsl:value-of select="objectId"/><br/>
-                    <xsl:value-of select="objectName"/><br/>
+                    id: <xsl:value-of select="objectId"/><br/>
+                    Name: <xsl:value-of select="objectName"/><br/>
+                    Param list:<br/>
+                    <xsl:for-each select="params/param">
+                        String: <xsl:value-of select="stringValue"/><br/>
+                        Number: <xsl:value-of select="numberValue"/><br/>
+                    </xsl:for-each>
+                    <xsl:for-each select="childs/child">
+                        <xsl:value-of select="objectId"/><br/>
+                        <xsl:value-of select="objectName"/><br/>
+                        <xsl:for-each select="params/param">
+                            <xsl:value-of select="stringValue"/><br/>
+                            <xsl:value-of select="numberValue"/><br/>
+                        </xsl:for-each>
+                    </xsl:for-each>
                 </xsl:for-each>
             </body>
         </html>

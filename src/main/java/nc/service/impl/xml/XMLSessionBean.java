@@ -7,12 +7,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.XMLConstants;
 import java.io.File;
 import java.io.IOException;
 
@@ -49,6 +54,23 @@ public class XMLSessionBean implements XMLStatelessBean {
             m.marshal(object, file);
             return file;
         } catch (IOException | JAXBException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    @Override
+    public NCObject importFile(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(NCObjectImpl.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+            Schema schema = schemaFactory.newSchema(new File("F:\\Projects\\_IDEAProjects\\lab3-web-layer\\src\\main\\resources\\schema1.xsd"));
+            unmarshaller.setSchema(schema);
+            NCObject object = (NCObject) unmarshaller.unmarshal(file);
+            return object;
+        } catch (JAXBException | SAXException e) {
             e.printStackTrace();
         }
 

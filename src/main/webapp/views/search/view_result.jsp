@@ -16,6 +16,8 @@
         <th>Type</th>
         <th>param</th>
         <th>value</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -25,6 +27,8 @@
             <th>${result.objectType}</th>
             <th>${result.attributeName}</th>
             <th>${result.stringValue} ${result.intValue}</th>
+            <th><a href="${rc}/xml/${result.id}" target="_blank">View XSTL</a></th>
+            <th><a href="${rc}/xml/export/${result.id}" target="_blank">export</a></th>
         </tr>
     </c:forEach>
     </tbody>

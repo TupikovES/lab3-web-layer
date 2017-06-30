@@ -10,14 +10,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:set var="rc" value="<%=request.getContextPath()%>" />
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>${title}</title>
-
     <!-- Bootstrap
     <link href="css/bootstrap.min.css" rel="stylesheet"> -->
     <spring:url value="/views/resources/css/bootstrap.css" var="bootstrap"/>

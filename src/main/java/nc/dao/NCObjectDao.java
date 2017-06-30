@@ -18,6 +18,7 @@ public interface NCObjectDao {
     //Object
     String insertObject(NCObject object);
     void updateObject(NCObject object);
+    void updateObjectId(String lastId, String newId);
     void deleteObject(String id);
 
     NCObject getObjectById(String id);
@@ -45,4 +46,6 @@ public interface NCObjectDao {
     List<NCParam> getParamByObject(NCObject object);
 
     Map<NCAttribute, NCParam> getValuesByObject(NCObject object);
+
+    boolean isExist(NCObject object);
 }
