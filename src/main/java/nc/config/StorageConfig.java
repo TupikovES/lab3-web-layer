@@ -38,9 +38,9 @@ public class StorageConfig {
 
     @Bean
     public PlatformTransactionManager txManager() {
-        DataSourceTransactionManager txManager = new DataSourceTransactionManager();
-        txManager.setDataSource(getDataSource());
-        //HibernateTransactionManager txManager = new HibernateTransactionManager(getFactoryBean());
+        //DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+        //txManager.setDataSource(getDataSource());
+        HibernateTransactionManager txManager = new HibernateTransactionManager(getFactoryBean());
         return txManager;
     }
 
