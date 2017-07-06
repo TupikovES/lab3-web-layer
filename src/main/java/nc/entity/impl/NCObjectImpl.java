@@ -4,7 +4,6 @@ import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
 import nc.util.batchsqlquery.BatchSqlCreator;
-import org.springframework.stereotype.Component;
 
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;

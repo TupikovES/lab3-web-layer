@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <xsl:output method="html" omit-xml-declaration="yes"/>
-    <xsl:template match="/">
+    <xsl:template match="object">
         <html>
             <head>
                 <title>View Object</title>
@@ -9,25 +9,35 @@
             <body>
                 <h1>XSLT View</h1>
                 <p><a href="/Lab3">to Home</a></p>
-                <xsl:for-each select="object">
-                    id: <xsl:value-of select="objectId"/><br/>
-                    Name: <xsl:value-of select="objectName"/><br/>
-                    Param list:<br/>
-                    <xsl:for-each select="params/param">
-                        String: <xsl:value-of select="stringValue"/><br/>
-                        Number: <xsl:value-of select="numberValue"/><br/>
-                    </xsl:for-each>
-                    <xsl:for-each select="childs/child">
-                        <xsl:value-of select="objectId"/><br/>
-                        <xsl:value-of select="objectName"/><br/>
-                        <xsl:for-each select="params/param">
-                            <xsl:value-of select="stringValue"/><br/>
-                            <xsl:value-of select="numberValue"/><br/>
-                        </xsl:for-each>
-                    </xsl:for-each>
-                </xsl:for-each>
+                ID: <xsl:value-of select="objectId"/><br/>
+                Name: <xsl:value-of select="objectName"/><br/>
+                Type: <xsl:value-of select="objectType"/><br/>
+                Parent: <xsl:value-of select="objectParent"/>
+                <p>Param list:</p>
+                <div><xsl:apply-templates select="params"/></div>
+                <p>Child list:</p>
+                <div><xsl:apply-templates select="childs"/></div>
             </body>
         </html>
     </xsl:template>
-
+    <xsl:template match="params">
+        <ul><xsl:apply-templates select="param"/></ul>
+    </xsl:template>
+    <xsl:template match="childs">
+        <ul><xsl:apply-templates select="child"/></ul>
+    </xsl:template>
+    <xsl:template match="param">
+        <li>Object ID: <xsl:value-of select="objectId"/></li>
+        <li>Attribute ID: <xsl:value-of select="attributeId"/></li>
+        <li>String value: <xsl:value-of select="stringValue"/></li>
+        <xsl:if test="numberValue != 0">
+            <li>Number value: <xsl:value-of select="numberValue"/></li>
+        </xsl:if>
+    </xsl:template>
+    <xsl:template match="child">
+        ID: <xsl:value-of select="objectId"/><br/>
+        Name: <xsl:value-of select="objectName"/><br/>
+        Type: <xsl:value-of select="objectType"/><br/>
+        Parent: <xsl:value-of select="objectParent"/>
+    </xsl:template>
 </xsl:stylesheet>

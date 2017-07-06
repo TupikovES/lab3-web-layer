@@ -100,12 +100,12 @@ public class XmlRequestController{
     public String importFile(@RequestParam MultipartFile file, RedirectAttributes redirectAttributes,
                              Model model, HttpSession session, HttpServletRequest request){
         NCObject object = xmlStatelessBean.importFile(Utilites.multipartFileToFile(file));
-        log.info("Unmarshaller object: id=" + object.getObjectId() + ", param=" + object.getParams().get(1));
         if (object == null) {
             redirectAttributes.addAttribute("message", "error file");
             return "redirect:/xml/import";
         }
-        if (objectDao.getObjectById(object.getObjectParent()) == null) {
+        //log.info("Unmarshaller object: id=" + object.getObjectId() + ", param=" + object.getParams().get(1));
+        if (object.getObjectParent() != null && objectDao.getObjectById(object.getObjectParent()) == null) {
             redirectAttributes.addAttribute("message", "No parent this object");
             return "redirect:/xml/import";
         }

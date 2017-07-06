@@ -26,7 +26,7 @@
             <th><c:out value="${result.name}"/></th>
             <th>${result.objectType}</th>
             <th>${result.attributeName}</th>
-            <th>${result.stringValue} ${result.intValue}</th>
+            <th>${result.stringValue} <c:if test="${result.intValue} != 0">${result.intValue}</c:if></th>
             <th><a href="${rc}/xml/${result.id}" target="_blank">View XSTL</a></th>
             <th><a href="${rc}/xml/export/${result.id}" target="_blank">export</a></th>
         </tr>
