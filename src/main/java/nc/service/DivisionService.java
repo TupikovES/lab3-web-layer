@@ -18,5 +18,6 @@ public interface DivisionService {
     Division getByName(String name);
     List<Division> getByClub(Club club);
     List<Division> getAll();
+    String getBreadcrumb(String divisionId);
     boolean isExist(Division division);
 }

@@ -1,5 +1,6 @@
 package nc.service;
 
+import nc.entity.ObjectEntity;
 import nc.entity.SearchResultObject;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
  * @author Evgeniy Tupikov
  */
 public interface SearchService {
-    List<SearchResultObject> search(String query);
+    List<ObjectEntity> search(String query);
 }

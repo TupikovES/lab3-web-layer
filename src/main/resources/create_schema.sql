@@ -189,3 +189,10 @@ CREATE TABLE `nc_params` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2017-05-22  9:34:07
+
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad184d56-10b9-11e7-83f0-b888e3a0097b', 'Name', b'0', '1', 'string', '0bbfc4e4-10b9-11e7-83f0-b888e3a0097b');
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad18652a-10b9-11e7-83f0-b888e3a0097b', 'City', b'0', '2', 'string', '0bbfc4e4-10b9-11e7-83f0-b888e3a0097b');
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad186ff1-10b9-11e7-83f0-b888e3a0097b', 'Name', b'0', '1', 'string', '0be36ff0-10b9-11e7-83f0-b888e3a0097b');
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad2b074c-10b9-11e7-83f0-b888e3a0097b', 'First name', b'0', '1', 'string', '0be38f6b-10b9-11e7-83f0-b888e3a0097b');
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad2b22cd-10b9-11e7-83f0-b888e3a0097b', 'Last name', b'0', '2', 'string', '0be38f6b-10b9-11e7-83f0-b888e3a0097b');
+INSERT INTO `netcracker_labs`.`nc_attribute` (`attribute_id`, `attribute_name`, `multiple`, `order_id`, `type`, `object_type`) VALUES ('ad2b3a78-10b9-11e7-83f0-b888e3a0097b', 'Age', b'0', '3', 'string', '0be38f6b-10b9-11e7-83f0-b888e3a0097b');

@@ -2,6 +2,10 @@ package nc.entity.impl;
 
 import nc.entity.NCAttribute;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -21,6 +25,7 @@ public class NCAttributeImpl implements NCAttribute {
     private String attributeName;
     private String objectType;
     private String type;
+
     private int order;
     private boolean multiple;
 

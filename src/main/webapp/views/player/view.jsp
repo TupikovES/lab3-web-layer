@@ -12,6 +12,7 @@
 <script src="${modal_js}" type="text/javascript"></script>
 
 <h2>Players from ${division.name}</h2>
+${breadcrumb}
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#playerModal">
     Add player...
 </button>

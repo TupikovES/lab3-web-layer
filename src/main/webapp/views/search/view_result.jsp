@@ -14,8 +14,6 @@
     <tr>
         <th>Name</th>
         <th>Type</th>
-        <th>param</th>
-        <th>value</th>
         <th></th>
         <th></th>
     </tr>
@@ -24,9 +22,7 @@
     <c:forEach var="result" items="${results}">
         <tr>
             <th><c:out value="${result.name}"/></th>
-            <th>${result.objectType}</th>
-            <th>${result.attributeName}</th>
-            <th>${result.stringValue} <c:if test="${result.intValue} != 0">${result.intValue}</c:if></th>
+            <th>${result.objectType.name}</th>
             <th><a href="${rc}/xml/${result.id}" target="_blank">View XSTL</a></th>
             <th><a href="${rc}/xml/export/${result.id}" target="_blank">export</a></th>
         </tr>

@@ -8,15 +8,11 @@
 
 <%@include file="header.jsp"%>
 
-<h1>Welcome, Lab 3 web-layer</h1>
-<h2>Sports community</h2>
-
-<p>3 types:</p>
-<ol>
-    <li><a href="${rc}/clubs">Clubs</a></li>
-    <li>Divisions</li>
-    <li>Players</li>
-</ol>
+<div class="jumbotron">
+    <h1>Hello, Welcome to the Football Clubs!</h1>
+    <p>You can add clubs, divisions and players. And also to carry out their search.</p>
+    <p><a class="btn btn-primary btn-lg" href="${rc}/clubs" role="button">Get Clubs</a></p>
+</div>
 
 <p class="text-info">
     <p>Added export and import support</p>

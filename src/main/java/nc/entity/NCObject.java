@@ -3,6 +3,7 @@ package nc.entity;
 import nc.util.batchsqlquery.BatchSqlCreator;
 import nc.util.batchsqlquery.BatchSqlCreatorContext;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

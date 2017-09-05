@@ -10,9 +10,23 @@
 <spring:url value="/views/club/js/club.js" var="modal_js"/>
 <script src="${modal_js}" type="text/javascript" ></script>
     <h2>Clubs page</h2>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Add club...
-</button>
+<div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        Add club...
+    </button>
+</div>
+<form method="post" action="${rc}/clubs/rename" class="navbar-form navbar-left">
+    <div class="form-group">
+        <div class="input-group">
+            <span class="input-group-addon">Specify a suffix for objects[suffix]-[name]</span>
+            <input type="text" name="suffix" class="form-control" id="suffix" placeholder="[suffix]">
+            <span class="input-group-btn">
+                <button type="submit" id="rename" class="btn btn-default">Rename</button>
+            </span>
+        </div>
+    </div>
+
+</form>
 <table class="table">
     <caption>Club list</caption>
     <thead>

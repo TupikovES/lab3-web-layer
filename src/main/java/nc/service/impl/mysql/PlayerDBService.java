@@ -1,6 +1,7 @@
 package nc.service.impl.mysql;
 
 import nc.dao.NCObjectDao;
+import nc.dao.ObjectDao;
 import nc.entity.*;
 import nc.entity.impl.NCAttributeImpl;
 import nc.entity.impl.PlayerImpl;
@@ -10,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,36 +22,45 @@ import java.util.List;
  * @author Evgeniy Tupikov
  */
 @Service("playerDBService")
+@Transactional(readOnly = true)
 public class PlayerDBService implements PlayerService {
 
     public static final Logger log = Logger.getLogger(PlayerDBService.class);
 
     @Autowired
-    @Qualifier("ncObjectDaoImpl")
-    private NCObjectDao objectDao;
+    @Qualifier("objectDaoImpl")
+    private ObjectDao objectDao;
 
     @Override
+    @Transactional(readOnly = false)
     public String createPlayer(Player player, String parentId) {
         log.info("Create player : " + player.toString());
-        NCObject object = NCObjectConverter.toNCObject(player);
-        object.setObjectParent(parentId);
-        return objectDao.insertObject(object);
+        ObjectEntity object = NCObjectConverter.toNCObject(player);
+        object.setParent(new ObjectEntity(parentId));
+        return (String) objectDao.saveObject(object);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void updatePlayer(Player player) {
-        objectDao.updateObject(NCObjectConverter.toNCObject(player));
+        ObjectEntity objectEntityUpdate = objectDao.getObjectById(player.getId());
+        ObjectEntity objectEntityNew = NCObjectConverter.toNCObject(player);
+        objectEntityUpdate.getParamEntityList().clear();
+        objectEntityUpdate.getParamEntityList().addAll(objectEntityNew.getParamEntityList());
+        objectDao.updateObject(objectEntityUpdate);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deletePlayer(String id) {
-        objectDao.deleteObject(id);
+        ObjectEntity objectEntity = objectDao.getObjectById(id);
+        if (objectEntity != null)
+            objectDao.deleteObject(objectEntity);
     }
 
     @Override
     public Player getById(String id) {
-        NCObject object = objectDao.getObjectById(id);
-        object.setValues(objectDao.getValuesByObject(object));
+        ObjectEntity object = objectDao.getObjectById(id);
         return NCObjectConverter.toPlayer(object);
     }
 
@@ -71,10 +82,11 @@ public class PlayerDBService implements PlayerService {
     @Override
     public List<Player> getByDivision(Division division) {
         log.info("Get players by " + division.getName() + "...");
-        List<NCObject> objectList = objectDao.getObjectsByParent(NCObjectConverter.toNCObject(division));
+        ObjectEntity objectParent = objectDao.getObjectById(division.getId());
+        log.info(objectParent.toString());
+        List<ObjectEntity> objectList = objectDao.getObjectsByParent(objectParent);
         List<Player> playerList = new ArrayList<>();
-        for (NCObject object : objectList) {
-            object.setValues(objectDao.getValuesByObject(object));
+        for (ObjectEntity object : objectList) {
             Player player = NCObjectConverter.toPlayer(object);
             playerList.add(player);
         }

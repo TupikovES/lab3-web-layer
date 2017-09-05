@@ -1,10 +1,13 @@
 package nc.controllers;
 
+import nc.dao.ObjectDao;
 import nc.entity.Division;
+import nc.entity.ObjectEntity;
 import nc.entity.Player;
 import nc.entity.impl.PlayerImpl;
 import nc.service.DivisionService;
 import nc.service.PlayerService;
+import nc.util.Breadcrumb;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,7 +41,9 @@ public class PlayerController {
     @RequestMapping(value = "/views/{divisionId}", method = RequestMethod.GET)
     public String viewPlayerList(@PathVariable String divisionId, Model model) {
         LAST_DIVISION = divisionId;
-        Division division = divisionService.getById(divisionId);
+        String breadcrumb = divisionService.getBreadcrumb(LAST_DIVISION);
+        model.addAttribute("breadcrumb", breadcrumb);
+        Division division = divisionService.getById(LAST_DIVISION);
         List<Player> players = playerService.getByDivision(division);
         model.addAttribute("division", division);
         model.addAttribute("players", players);
