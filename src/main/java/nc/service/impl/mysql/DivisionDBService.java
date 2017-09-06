@@ -1,16 +1,21 @@
 package nc.service.impl.mysql;
 
 import nc.dao.NCObjectDao;
+import nc.dao.ObjectDao;
 import nc.entity.Club;
 import nc.entity.Division;
 import nc.entity.NCObject;
+import nc.entity.ObjectEntity;
 import nc.entity.impl.DivisionImpl;
+import nc.entity.impl.NCObjectImpl;
 import nc.service.DivisionService;
+import nc.util.Breadcrumb;
 import nc.util.NCObjectConverter;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,35 +26,44 @@ import java.util.List;
  * @author Evgeniy Tupikov
  */
 @Service("divisionDBService")
+@Transactional(readOnly = true)
 public class DivisionDBService implements DivisionService {
 
     public static final Logger log = Logger.getLogger(DivisionDBService.class);
 
     @Autowired
-    @Qualifier("ncObjectDaoImpl")
-    private NCObjectDao objectDao;
+    @Qualifier("objectDaoImpl")
+    private ObjectDao objectDao;
 
     @Override
+    @Transactional(readOnly = false)
     public String createDivision(Division division, String parentId) {
-        NCObject object = NCObjectConverter.toNCObject(division);
-        object.setObjectParent(parentId);
-        return objectDao.insertObject(object);
+        ObjectEntity object = NCObjectConverter.toNCObject(division);
+        object.setParent(new ObjectEntity(parentId));
+        return (String) objectDao.saveObject(object);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void updateDivision(Division division) {
-        objectDao.updateObject(NCObjectConverter.toNCObject(division));
+        ObjectEntity objectEntityUpdate = objectDao.getObjectById(division.getId());
+        ObjectEntity objectEntityNew = NCObjectConverter.toNCObject(division);
+        objectEntityUpdate.getParamEntityList().clear();
+        objectEntityUpdate.getParamEntityList().addAll(objectEntityNew.getParamEntityList());
+        objectDao.updateObject(objectEntityUpdate);
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void deleteDivision(String id) {
-        objectDao.deleteObject(id);
+        ObjectEntity objectEntity = objectDao.getObjectById(id);
+        if (objectEntity != null)
+            objectDao.deleteObject(objectEntity);
     }
 
     @Override
     public Division getById(String id) {
-        NCObject object = objectDao.getObjectById(id);
-        object.setValues(objectDao.getValuesByObject(object));
+        ObjectEntity object = objectDao.getObjectById(id);
         return NCObjectConverter.toDivision(object);
     }
 
@@ -60,10 +74,11 @@ public class DivisionDBService implements DivisionService {
 
     @Override
     public List<Division> getByClub(Club club) {
-        List<NCObject> objectList = objectDao.getObjectsByParent(NCObjectConverter.toNCObject(club));
+        ObjectEntity objectParent = objectDao.getObjectById(club.getId());
+        List<ObjectEntity> objectList = objectDao.getObjectsByParent(objectParent);
         log.info("Division DB Service : " + objectList.isEmpty());
         List<Division> divisionList = new ArrayList<>();
-        for (NCObject object : objectList) {
+        for (ObjectEntity object : objectList) {
             divisionList.add(NCObjectConverter.toDivision(object));
         }
         return divisionList;
@@ -72,6 +87,11 @@ public class DivisionDBService implements DivisionService {
     @Override
     public List<Division> getAll() {
         return null;
+    }
+
+    @Override
+    public String getBreadcrumb(String divisionId) {
+        return new Breadcrumb().createBreadcrumb(objectDao.getObjectById(divisionId));
     }
 
     @Override

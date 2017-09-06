@@ -4,7 +4,9 @@ import nc.entity.NCAttribute;
 import nc.entity.NCObject;
 import nc.entity.NCParam;
 import nc.util.batchsqlquery.BatchSqlCreator;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import javax.xml.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,13 +23,14 @@ import java.util.Map;
 public class NCObjectImpl implements NCObject {
 
     private static final long serialVersionUID = -4877459895255861985L;
-
     private String objectId;
     private String objectName;
+
     private String objectParent;
     private String objectType;
 
     private String objectTypeName;
+
     private String objectTypeParent;
 
     @XmlElementWrapper(name = "attributes")

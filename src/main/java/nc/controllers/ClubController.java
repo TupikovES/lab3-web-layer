@@ -55,6 +55,7 @@ public class ClubController {
 
     @RequestMapping(value = "/del/{id}",method = RequestMethod.GET)
     public String deleteClub(@PathVariable String id, Model model) {
+        log.info("Run delet method... club id = " + id);
         Club club = new ClubImpl();
         club.setId(id);
         clubService.deleteClub(club);
@@ -72,6 +73,14 @@ public class ClubController {
     public String updateClub(@RequestParam String id, @RequestParam String name, @RequestParam String city) {
         log.info(id + " - " + name + " - " + city);
         clubService.updateClub(new ClubImpl(id, name, city));
+        return "redirect:/clubs";
+    }
+
+    @RequestMapping(value = "/rename", method = RequestMethod.POST)
+    public String renameClub(@RequestParam String suffix) {
+
+
+
         return "redirect:/clubs";
     }
 

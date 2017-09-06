@@ -1,5 +1,6 @@
 package nc.controllers;
 
+import nc.entity.ObjectEntity;
 import nc.entity.SearchResultObject;
 import nc.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class SearchController {
 
     @RequestMapping("/search")
     public String search(@RequestParam String query, Model model) {
-        List<SearchResultObject> resultObjects;
+        List<ObjectEntity> resultObjects;
         resultObjects = searchService.search(query);
         model.addAttribute("query", query);
         model.addAttribute("results", resultObjects);

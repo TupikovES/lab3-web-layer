@@ -17,4 +17,5 @@ public interface ClubService {
     List<Club> getAll();
     String createClub(Club club);
     boolean isExist(Club club);
+    void renameClub(String suffix);
 }

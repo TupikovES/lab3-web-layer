@@ -1,5 +1,6 @@
 package nc.entity;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.Date;
 

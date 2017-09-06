@@ -1,5 +1,6 @@
 package nc.controllers;
 
+import nc.dao.ObjectDao;
 import nc.entity.Club;
 import nc.entity.Division;
 import nc.entity.impl.ClubImpl;
@@ -29,6 +30,10 @@ public class DivisionController {
     public static String CLUB_ID;
 
     @Autowired
+    @Qualifier("objectDaoImpl")
+    private ObjectDao objectDao;
+
+    @Autowired
     @Qualifier("clubDBService")
     private ClubService clubService;
 
@@ -51,13 +56,14 @@ public class DivisionController {
         log.info("delete...");
         divisionService.deleteDivision(id);
         log.info("success delete!");
-        return "redirect:/views/" + CLUB_ID;
+        return "redirect:/division/views/" + CLUB_ID;
     }
 
     @RequestMapping(value = "/views/{id}", method = RequestMethod.GET)
     public String viewDivisionInClub(@PathVariable String id, Model model) {
         log.info("run view divisions in club method...");
         CLUB_ID = id;
+
         Club club = clubService.getById(id);
         log.info("parent ig : " + club.getId());
         model.addAttribute("title", "Divisions from " + club.getName());
